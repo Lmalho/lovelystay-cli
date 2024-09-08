@@ -68,8 +68,11 @@ The database is a Postgres database with the following schema:
 erDiagram
     users {
         id integer PK
-        email varchar
-        location varchar
+        username text
+        name text
+        location text
+        html_url text
+        repos_url text
     }
 
     languages {
