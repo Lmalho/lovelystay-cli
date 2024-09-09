@@ -15,9 +15,9 @@ Install
 
 1. Run `nvm install` to install the Node version specified in `.nvmrc`
 2. Run `pnpm install` to install the dependencies.
-3. Run `docker compose up` to start the Postgres database
+3. Run `docker compose up` to start the Postgres database and run the migrations using [Goose](https://github.com/pressly/goose)
    For details, see `docker-compose.yml`
-4. Run `pnpm config` to config the CLI
+4. Run `pnpm seed` to config the CLI
 
 ### CLI Examples
 
