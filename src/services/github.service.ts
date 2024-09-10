@@ -17,27 +17,31 @@ export type GithubRepoLanguages = {
   [key: string]: number;
 };
 
-export const getGithubUserInfo = async (username: string) => {
+export const getGithubUserInfo = async (username: string, token?: string) => {
   return executeRequest<GithubUserInfo>(
     "GET",
     `https://api.github.com/users/${username}`,
+    token,
   );
 };
 
-export const getGithubUserRepos = async (username: string) => {
+export const getGithubUserRepos = async (username: string, token?: string) => {
   return executeRequest<GithubRepo[]>(
     "GET",
     `https://api.github.com/users/${username}/repos`,
+    token,
   );
 };
 
 export const getGithubRepoLanguages = async (
   username: string,
   repoName: string,
+  token?: string,
 ) => {
   return executeRequest<GithubRepoLanguages>(
     "GET",
     `https://api.github.com/repos/${username}/${repoName}/languages`,
+    token,
   );
 };
 
