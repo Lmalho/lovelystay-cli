@@ -15,36 +15,37 @@ Install
 
 1. Run `nvm install` to install the Node version specified in `.nvmrc`
 2. Run `pnpm install` to install the dependencies.
-3. Run `docker compose up` to start the Postgres database and run the migrations using [Goose](https://github.com/pressly/goose)
+3. Create a `.env` file in the format of `.env.example` and fill in the values. The env.example has the values to run with the docker-compose file.
+4. Run `docker compose up` to start the Postgres database and run the migrations using [Goose](https://github.com/pressly/goose)
    For details, see `docker-compose.yml`
-4. Run `pnpm seed` to config the CLI
+5. Run `pnpm seed` to run a script that will fetch all [languages](https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml) compatible Github and save them to the database.
 
 ### CLI Examples
 
 Commands to run the app
 
-Save a user  fetched from github
+Save a user fetched from github
 
 ```bash
-lscli save example@mail.com
+lscli save octocat
 ```
 
 Fetch all users
 
 ```bash
-lscli fetch
+lscli list
 ```
 
-Fetch users filtered by a language
+List users filtered by a language
 
 ```bash
-lscli fetch --language=javascript
+lscli list --language TypeScript
 ```
 
-Fetch users filtered by a location
+List users filtered by a location
 
 ```bash
-lscli fetch --location=Portugal
+lscli list --location Lisbon
 ```
 
 ## Develop
@@ -57,6 +58,8 @@ Commands to run tests
 # unit tests
 pnpm run test
 ```
+
+FOr testing we are using [Jest](https://jestjs.io/) and [TestContainers](https://www.testcontainers.org/)
 
 ## Documentation
 
