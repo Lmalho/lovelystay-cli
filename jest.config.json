@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "globalSetup": "../test/global.setup.ts",
+  "globalTeardown": "../test/global.teardown.ts",
+  "rootDir": "src",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": ["**/*.(t|j)s"],
+  "coveragePathIgnorePatterns": ["spec", "e2e-spec"],
+  "coverageDirectory": "../coverage",
+  "testEnvironment": "node",
+  "setupFilesAfterEnv": ["jest-extended/all"],
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/$1"
+  }
+}
