@@ -5,7 +5,6 @@ export type GithubUserInfo = {
   name: string;
   location: string;
   html_url: string;
-  repos_url: string;
 };
 
 export type GithubRepo = {
@@ -54,7 +53,6 @@ const executeRequest = async <T>(
     const requestConfig: AxiosRequestConfig = {
       method,
       url,
-      headers: {},
     };
 
     if (token) {
@@ -62,17 +60,10 @@ const executeRequest = async <T>(
         Authorization: `Bearer ${token}`,
       };
     }
-    const response = await axios.request<T>({
-      method,
-      url,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.request<T>(requestConfig);
 
     return response.data as T;
   } catch (error) {
-    console.error("Error fetching data from github:", error);
-    return null;
+    return new Error(`Error fetching data from github: ${error}`);
   }
 };
