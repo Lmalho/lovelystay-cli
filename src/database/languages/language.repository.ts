@@ -7,7 +7,7 @@ export type Language = {
   name: string;
 };
 
-export const getLanguages = async (
+export const findLanguages = async (
   db: IDatabase<any, IClient>,
   languages: string[],
 ): Promise<Language[]> => {
