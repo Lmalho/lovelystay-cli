@@ -9,8 +9,8 @@ export type DbUser = {
   login: string;
   name: string;
   location: string;
+  repo_count: number;
   html_url: string;
-  repos_url: string;
 };
 
 export type User = {
@@ -18,8 +18,8 @@ export type User = {
   login: string;
   name: string;
   location: string;
+  repo_count: number;
   html_url: string;
-  repos_url: string;
   languages: string[];
 };
 
@@ -31,11 +31,12 @@ export type Filter = {
 export const saveUser = async (
   db: IDatabase<any, IClient>,
   userInfo: GithubUserInfo,
+  repo_count: number,
   userLanguages: string[],
 ) => {
   const languages = await findLanguages(db, userLanguages);
 
-  const newUser = await insertUser(db, userInfo);
+  const newUser = await insertUser(db, userInfo, repo_count);
 
   if (languages.length > 0) {
     await addUserLanguages(
@@ -94,13 +95,14 @@ export const findUsers = async (
 const insertUser = async (
   db: IDatabase<any, IClient>,
   userInfo: GithubUserInfo,
+  repo_count: number,
 ): Promise<DbUser> => {
   return db.one(usersSql.add, [
     userInfo.login,
     userInfo.name,
     userInfo.location,
+    repo_count,
     userInfo.html_url,
-    userInfo.repos_url,
   ]);
 };
 

@@ -24,14 +24,14 @@ describe("UserRepository", () => {
   });
   it("should create a new user", async () => {
     const reqUser = generateUser();
-    const user = await saveUser(db, reqUser, languages);
+    const user = await saveUser(db, reqUser, reqUser.repo_count, languages);
 
     expect(user).toMatchObject(reqUser);
   });
 
   it("should find a user", async () => {
     const reqUser = generateUser();
-    await saveUser(db, reqUser, languages);
+    await saveUser(db, reqUser, reqUser.repo_count, languages);
 
     const user = await findOneUser(db, reqUser.login);
 
@@ -46,7 +46,7 @@ describe("UserRepository", () => {
 
   it("should find users", async () => {
     const reqUser = generateUser();
-    await saveUser(db, reqUser, languages);
+    await saveUser(db, reqUser, reqUser.repo_count, languages);
 
     const users = await findUsers(db);
 
@@ -56,7 +56,7 @@ describe("UserRepository", () => {
   it("should find users by language", async () => {
     await db.none(languagesSql.add, "Go");
     const reqUser = generateUser();
-    await saveUser(db, reqUser, ["Go"]);
+    await saveUser(db, reqUser, reqUser.repo_count, ["Go"]);
     const users = await findUsers(db, { language: "Go" });
 
     expect(users).toHaveLength(1);
@@ -66,7 +66,7 @@ describe("UserRepository", () => {
 
   it("should find users by location", async () => {
     const reqUser = generateUser();
-    await saveUser(db, reqUser, languages);
+    await saveUser(db, reqUser, reqUser.repo_count, languages);
     const users = await findUsers(db, { location: reqUser.location });
 
     expect(users).toHaveLength(1);
@@ -76,7 +76,7 @@ describe("UserRepository", () => {
   it("should find users by location and language", async () => {
     await db.none(languagesSql.add, "C#");
     const reqUser = generateUser();
-    await saveUser(db, reqUser, ["C#"]);
+    await saveUser(db, reqUser, reqUser.repo_count, ["C#"]);
     const users = await findUsers(db, {
       location: reqUser.location,
     });

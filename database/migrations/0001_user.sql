@@ -5,7 +5,7 @@ CREATE TABLE users (
     name TEXT,
     location TEXT NOT NULL,
     html_url TEXT,
-    repos_url TEXT,
+    repo_count INT,
     CONSTRAINT uq_users_login UNIQUE (login)
 );
 

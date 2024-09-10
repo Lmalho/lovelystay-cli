@@ -1,21 +1,21 @@
 export const usersSql = {
-  add: "INSERT INTO users(login, name, location, html_url, repos_url)\
+  add: "INSERT INTO users(login, name, location, repo_count, html_url )\
    VALUES($1, $2, $3, $4, $5)\
    ON CONFLICT (login) DO UPDATE SET name = $2,\
-   location = $3, html_url = $4, repos_url = $5\
+   location = $3, repo_count = $4, html_url = $5\
    RETURNING *",
   findOne:
-    "SELECT u.login, u.name, u.location, u.html_url, u.repos_url, l.name as languages \
+    "SELECT u.login, u.name, u.location, u.html_url, u.repo_count, l.name as languages \
    FROM users u\
    LEFT JOIN user_languages ul ON u.id = ul.user_id\
    LEFT JOIN languages l ON ul.language_id = l.id\
    WHERE u.login = $1",
   find: (language?: string, location?: string) => {
     let query =
-      "SELECT u.id, u.login, u.name, u.location, u.html_url, u.repos_url, l.name as languages \
+      "SELECT u.id, u.login, u.name, u.location, u.html_url, u.repo_count, l.name as languages \
     FROM users u\
     LEFT JOIN user_languages ul ON u.id = ul.user_id\
-    LEFT JOIN languages l ON ul.language_id = l.id\
+    RIGHT JOIN languages l ON ul.language_id = l.id\
     WHERE TRUE";
 
     if (language) {

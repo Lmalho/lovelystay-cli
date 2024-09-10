@@ -71,8 +71,8 @@ erDiagram
         username text
         name text
         location text
+        repo_count int
         html_url text
-        repos_url text
     }
 
     languages {
