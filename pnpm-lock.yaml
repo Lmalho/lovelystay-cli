@@ -17,6 +17,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       pg-promise:
         specifier: ^11.9.1
         version: 11.9.1
