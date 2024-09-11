@@ -2,12 +2,7 @@ import { Command } from "commander";
 import { IDatabase } from "pg-promise";
 import { IClient } from "pg-promise/typescript/pg-subset";
 import { CliConfig } from "../config/config";
-import {
-  getGithubUserInfo,
-  getGithubUserRepos,
-  GithubRepo,
-  getGithubRepoLanguages,
-} from "../services/github.service";
+import { GithubRepo, githubService } from "../services/github.service";
 import { saveUser } from "../database/users/user.repository";
 import { validateGithubUsername } from "../common/input.validation";
 
@@ -29,8 +24,8 @@ export const saveHandler = async (
   cfg: CliConfig,
 ) => {
   const [userInfo, userRepos] = await Promise.all([
-    getGithubUserInfo(username, cfg.github?.token),
-    getGithubUserRepos(username, cfg.github?.token),
+    githubService.getUserInfo(username, cfg.github?.token),
+    githubService.getUserRepos(username, cfg.github?.token),
   ]);
   if (userInfo instanceof Error) {
     console.error(userInfo.message);
@@ -53,7 +48,7 @@ const getLanguages = async (
 ) => {
   return Promise.all(
     userRepos.map(async (repo) => {
-      const repoLanguages = await getGithubRepoLanguages(
+      const repoLanguages = await githubService.getRepoLanguages(
         username,
         repo.name,
         cfg.github?.token,

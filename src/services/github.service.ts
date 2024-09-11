@@ -16,7 +16,7 @@ export type GithubRepoLanguages = {
   [key: string]: number;
 };
 
-export const getGithubUserInfo = async (username: string, token?: string) => {
+const getUserInfo = async (username: string, token?: string) => {
   return executeRequest<GithubUserInfo>(
     "GET",
     `https://api.github.com/users/${username}`,
@@ -24,7 +24,7 @@ export const getGithubUserInfo = async (username: string, token?: string) => {
   );
 };
 
-export const getGithubUserRepos = async (username: string, token?: string) => {
+const getUserRepos = async (username: string, token?: string) => {
   return executeRequest<GithubRepo[]>(
     "GET",
     `https://api.github.com/users/${username}/repos`,
@@ -32,7 +32,7 @@ export const getGithubUserRepos = async (username: string, token?: string) => {
   );
 };
 
-export const getGithubRepoLanguages = async (
+const getRepoLanguages = async (
   username: string,
   repoName: string,
   token?: string,
@@ -65,4 +65,10 @@ const executeRequest = async <T>(
   } catch (error) {
     return new Error(`Error fetching data from github: ${error}`);
   }
+};
+
+export const githubService = {
+  getUserInfo,
+  getUserRepos,
+  getRepoLanguages,
 };

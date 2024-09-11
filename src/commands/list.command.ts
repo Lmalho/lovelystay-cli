@@ -37,7 +37,7 @@ const validateOptions = (options: Filter) => {
     process.exit(0);
   }
   if (options.language && !validateProgrammingLanguage(options.language)) {
-    console.error("${options.language} is not a valid language");
+    console.error(`${options.language} is not a valid language`);
     process.exit(0);
   }
   return;
