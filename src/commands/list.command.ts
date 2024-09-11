@@ -1,12 +1,7 @@
 import { Command } from "commander";
-import { findUsers } from "../database/users/user.repository";
+import { Filter, findUsers } from "../database/users/user.repository";
 import { IDatabase } from "pg-promise";
 import { IClient } from "pg-promise/typescript/pg-subset";
-
-export type ListOptions = {
-  location?: string;
-  language?: string;
-};
 
 export const listCommand = (db: IDatabase<any, IClient>) => {
   return new Command()
@@ -14,7 +9,7 @@ export const listCommand = (db: IDatabase<any, IClient>) => {
     .description("List all users")
     .option("-l, --location <location>", "Filter by location")
     .option("-p, --language <language>", "Filter by programming language")
-    .action(async (options?: ListOptions) => {
+    .action(async (options?: Filter) => {
       const now = new Date();
       await listHandler(db, options);
       console.log(`Execution time: ${new Date().getTime() - now.getTime()}ms`);
@@ -24,7 +19,7 @@ export const listCommand = (db: IDatabase<any, IClient>) => {
 
 export const listHandler = async (
   db: IDatabase<any, IClient>,
-  options?: ListOptions,
+  options?: Filter,
 ) => {
   let filter;
   if (options) {

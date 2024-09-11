@@ -13,13 +13,7 @@ export type DbUser = {
   html_url: string;
 };
 
-export type User = {
-  id: number;
-  login: string;
-  name: string;
-  location: string;
-  repo_count: number;
-  html_url: string;
+export type User = DbUser & {
   languages: string[];
 };
 

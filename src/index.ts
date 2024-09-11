@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Command } from "commander";
 import { config } from "./config/config";
 import { postgresClient } from "./database/postgres.client";
