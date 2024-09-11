@@ -19,33 +19,40 @@ Install
 4. Run `docker compose up` to start the Postgres database and run the migrations using [Goose](https://github.com/pressly/goose)
    For details, see `docker-compose.yml`
 5. Run `pnpm seed` to run a script that will fetch all [languages](https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml) compatible Github and save them to the database.
+6. Run `pnpm start` or `pnpm tscli` to start the application.
 
 ### CLI Examples
 
 Commands to run the app
 
+Help
+
+```bash
+pnpm lscli --help
+```
+
 Save a user fetched from github
 
 ```bash
-lscli save octocat
+pnpm lscli save octocat
 ```
 
 Fetch all users
 
 ```bash
-lscli list
+pnpm lscli list
 ```
 
 List users filtered by a language
 
 ```bash
-lscli list --language TypeScript
+pnpm lscli list --language TypeScript
 ```
 
 List users filtered by a location
 
 ```bash
-lscli list --location Lisbon
+pnpm lscli list --location Lisbon
 ```
 
 ## Develop
@@ -80,7 +87,7 @@ erDiagram
 
     languages {
         id integer PK
-        name varchar
+        name text
     }
 
     user_languages {
@@ -91,3 +98,14 @@ erDiagram
     users ||--o{ user_languages : "has many"
     languages ||--o{ user_languages : "has many"
 ```
+
+### Environment Variables
+
+| Variable     | Description       | Mandatory |
+|--------------|-------------------|-----------|
+| DB_HOST      | Database host     | yes       |
+| DB_PORT      | Database port     | yes       |
+| DB_USER      | Database user     | yes       |
+| DB_PASSWORD  | Database password | yes       |
+| DB_NAME      | Database name     | yes       |
+| GITHUB_TOKEN | Github token      | no        |
