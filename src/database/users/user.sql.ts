@@ -15,7 +15,7 @@ export const usersSql = {
       "SELECT u.id, u.login, u.name, u.location, u.html_url, u.repo_count, l.name as languages \
     FROM users u\
     LEFT JOIN user_languages ul ON u.id = ul.user_id\
-    RIGHT JOIN languages l ON ul.language_id = l.id\
+    LEFT JOIN languages l ON ul.language_id = l.id\
     WHERE TRUE";
 
     if (language) {
