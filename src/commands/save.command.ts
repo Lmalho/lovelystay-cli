@@ -9,13 +9,16 @@ import {
   getGithubRepoLanguages,
 } from "../services/github.service";
 import { saveUser } from "../database/users/user.repository";
+import { validateGithubUsername } from "../common/input.validation";
 
 export const saveCommand = (db: IDatabase<any, IClient>, cfg: CliConfig) => {
   return new Command()
     .command("save <username>")
     .description("Save user info from Github to the database")
     .action(async (username: string) => {
-      saveHandler(username, db, cfg);
+      validateUsername(username);
+      const response = await saveHandler(username, db, cfg);
+      console.table([response]);
       process.exit(0);
     });
 };
@@ -29,7 +32,6 @@ export const saveHandler = async (
     getGithubUserInfo(username, cfg.github?.token),
     getGithubUserRepos(username, cfg.github?.token),
   ]);
-
   if (userInfo instanceof Error) {
     console.error(userInfo.message);
     return;
@@ -41,10 +43,7 @@ export const saveHandler = async (
   }
 
   const userLanguages = await getLanguages(username, userRepos, cfg);
-  console.table([
-    await saveUser(db, userInfo, userRepos.length, userLanguages),
-  ]);
-  return;
+  return saveUser(db, userInfo, userRepos.length, userLanguages);
 };
 
 const getLanguages = async (
@@ -70,4 +69,12 @@ const getLanguages = async (
     });
     return Array.from(uLang);
   });
+};
+
+const validateUsername = (username: string) => {
+  if (!validateGithubUsername(username)) {
+    console.error(`${username} is not a valid Github username`);
+    process.exit(0);
+  }
+  return;
 };

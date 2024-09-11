@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint \"./src/**/*.ts\" --fix",
-    "start:dev": "tsc -b ./tsconfig.build.json && ts-node src/index.ts",
+    "start:dev": "tsc -b ./tsconfig.build.json && node dist/index.js",
     "seed": "tsc && node dist/ops/seed.js",
     "build": "tsc -b ./tsconfig.build.json",
     "test": "jest"

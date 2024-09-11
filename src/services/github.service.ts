@@ -54,8 +54,7 @@ const executeRequest = async <T>(
       method,
       url,
     };
-
-    if (token) {
+    if (token && token.length > 0) {
       requestConfig.headers = {
         Authorization: `Bearer ${token}`,
       };
